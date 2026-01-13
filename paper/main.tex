@@ -1,0 +1,52 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{lipsum} % Remove in final version
+
+% Page layout (Nature-like: narrow margins, single column)
+\geometry{a4paper, margin=2.5cm}
+\onehalfspacing
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% Title metadata
+\title{Epidemiology and In-Hospital Mortality of Sepsis Among ICU Admissions: A Retrospective Study Using the MIMIC-III Database}
+\author[1]{Ernest Ceballos Ortega}
+\author[2]{Júlia Galimany Claver}
+\author[2]{Oriol Galimany Garriga}
+\affil[1]{Master's in Health Data Science, Universitat Rovira i Virgili, Tarragona, Spain}
+\affil[2]{Department of Biomedical Engineering, Universitat de Vic – Universitat Central de Catalunya, Vic, Spain}
+\date{}
+
+\begin{document}
+
+% Title page
+\input{sections/titlepage}
+
+% Abstracts
+\input{sections/abstract}
+
+% Main text
+\section{Introduction}
+\input{sections/intro}
+
+\section{Methods}
+\input{sections/methods}
+
+% --- Les següents seccions ---
+% \section{Results}
+% \section{Discussion}
+% \section{Conclusion}
+% \bibliographystyle{unsrtnat} % References numbered by order of appearance
+% \bibliography{references}
+
+\end{document}
