@@ -1,0 +1,4 @@
+Logistic Regression.
+Variables Predictors: Ethnicity , insurance, ICD9_CODE, age, gender
+Variable repost: hospital_expire_flag
+S’han d’afegir les variables ethnicity, insurance, ICD9_CODE a la taula
