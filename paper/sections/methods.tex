@@ -1,7 +1,27 @@
-\subsection{Data source}
-We used MIMIC-III (version 1.4), a publicly available, de-identified database containing comprehensive clinical data from over 40,000 ICU admissions at Beth Israel Deaconess Medical Center (Boston, USA) between 2001 and 2012 \cite{mimic}. The database includes demographics, vital signs, laboratory tests, medications, imaging reports, and ICD-9 diagnosis codes. Access was granted after completion of the required CITI training program.
+\subsection{Data source and study design}
+This study was designed as a retrospective observational cohort study of adult patients admitted to the intensive care unit (ICU). All analyses were based on routinely collected clinical data, and no interventions were performed.
+
+Data were obtained from the MIMIC-III (version 1.4), a large, publicly available database containing de-identified health-related data from over 40,000 ICU admissions recorded between 2001 and 2012 \cite{mimic}. The database includes detailed information on patient demographics, diagnoses, procedures, and clinical outcomes collected during routine clinical care. Only de-identified data were used in this study, in accordance with the database's data use agreement. Access was granted after completion of the required CITI training program.
 
 \subsection{Cohort definition}
-We performed a retrospective observational study using the Medical Information Mart for Intensive Care III (MIMIC-III), version 1.4, a publicly available database containing de-identified health data from over 40,000 adult and neonatal ICU admissions at Beth Israel Deaconess Medical Center between 2001 and 2012 \cite{mimic}. Our cohort comprised all adult patients aged 16 years or older with at least one ICU admission recorded in the \texttt{ICUSTAYS} table. Age was calculated as the difference in years between the ICU admission time (\texttt{INTIME}) and the patient’s date of birth. For patients with multiple ICU stays, each stay was considered an independent observation. Neonatal and pediatric admissions (age < 16 years) were excluded. The final analytical cohort included all qualifying ICU admissions available in the database, without further exclusion criteria.
+All ICU stays recorded in the \texttt{ICUSTAYS} table were considered and linked to the \texttt{ADMISSIONS} and \texttt{PATIENTS} tables using unique hospital admission (\texttt{HADM_ID}) and patient (\texttt{SUBJECT_ID}) identifiers. This linkage allowed the integration of demographic data, admission and discharge times, and in-hospital mortality information for each ICU stay.
 
-All data extraction and cohort construction were performed using R (version 4.4.0) with the \texttt{DBI} and \texttt{dplyr} packages, connecting directly to a local PostgreSQL instance of MIMIC-III. The full reproducible script is available in the project repository (see \texttt{analysis/01\_cohort.R}).
+Our cohort comprised all adult patients aged 16 years or older with at least one ICU admission recorded in the \texttt{ICUSTAYS} table. Patient age was calculated as the difference in years between the ICU admission time (\texttt{INTIME}) and the patient’s date of birth (\texttt{DOB}). Neonatal and pediatric admissions (age < 16 years) were excluded. For each ICU stay, the following variables were extracted: hospital admission ID, patient ID, ICU stay ID, age, sex, ICU admission and discharge times (\texttt{INTIME} and \texttt{OUTTIME}), and in-hospital mortality status (\texttt{HOSPITAL_EXPIRE_FLAG}). Duplicate records were removed to ensure that each observation corresponded to a unique ICU stay.
+
+Sepsis was identified at the hospital admission level using International Classification of Diseases, Ninth Revision, Clinical Modification (ICD-9-CM) diagnosis codes obtained from the \texttt{DIAGNOSES_ICD} table \cite{cdc_icd9cm}. Admissions were classified as sepsis-related if they included ICD-9-CM codes beginning with \textit{038} (septicemia) or the specific codes \textit{995.91} (sepsis), \textit{995.92} (severe sepsis), or \textit{785.52} (septic shock). Based on this definition, ICU stays were classified using a binary variable indicating sepsis (1) or non-sepsis (0), which was subsequently used in the comparative analyses.
+
+For patients with multiple ICU stays, each stay was considered an independent observation. The final analytical cohort included all qualifying ICU admissions available in the database, with no additional exclusion criteria applied.
+
+\subsection{Sepsis prevalence and in-hospital mortality}
+Sepsis prevalence was estimated as the proportion of ICU admissions classified as sepsis-related among all eligible ICU stays included in the analytical cohort. The numerator consisted of ICU stays addociated with a hospital admission meeting the ICD-9-CM-based definition of sepsis, while the denominator included the total number of qualifying ICU admissions.
+
+In-hospital mortality was assessed using the hospital mortality indicator (\texttt{HOSPITAL_EXPIRE_FLAG}), which reflects whether the patient died during the corresponding hospital admission. Mortality rates were calculated separately for ICU stays with and without sepsis and compared within the same analytical cohort, stratified according to sepsis status.
+
+\subsection{Statistical analysis}
+- tipus de variables: categoriques (sepsis, mortalitat, sexe) i continues (edat)
+- Estadistica descriptiva (nombres i proporcions).
+- Generalized linear model (glm): logistic regression
+- programes
+
+All data extraction, cohort construction, and statistical analyses were performed using R (version 4.4.0) with the \texttt{DBI} and \texttt{dplyr} packages, connecting directly to a local PostgreSQL instance of MIMIC-III. The full reproducible analysis script is available in the project repository (see \texttt{analysis/01\_cohort.R}).
+
