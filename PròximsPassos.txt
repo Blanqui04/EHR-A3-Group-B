@@ -1,4 +1,15 @@
-Logistic Regression.
-Variables Predictors: Ethnicity , insurance, ICD9_CODE, age, gender
-Variable repost: hospital_expire_flag
-S’han d’afegir les variables ethnicity, insurance, ICD9_CODE a la taula
+Potser coses necessaries d'analisis
+61,532 ICU admissions
+46,520 unique patients
+65.4 years mean age
+SD: 16.2
+55.1% male
+14.9% overall mortality
+64.8 years (sepsis group)
+65.5 years (no sepsis group)
+54.2% male (sepsis)
+55.3% male (no sepsis)
+χ² statistic (2,847.3)
+RR i OR amb CI
+Training/test mortality rates
+Class imbalance 2.08:1

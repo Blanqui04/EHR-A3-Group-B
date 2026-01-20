@@ -1,0 +1,144 @@
+The complete R code used in this analysis is available in the Jupyter Notebook \texttt{Activity-A3.ipynb} located in the \texttt{analysis/} directory of this project repository. Below we present the key code segments organized by analysis section.
+
+\subsection*{A.1 Data Loading and Cohort Construction}
+
+\begin{verbatim}
+# Load required libraries
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+library(RMariaDB)
+library(DBI)
+library(ggplot2)
+
+# Connect to MIMIC-III database
+con <- dbConnect(
+  drv = RMariaDB::MariaDB(),
+  host = "ehr3.deim.urv.cat",
+  dbname = "mimiciiiv14",
+  port = 3306
+)
+
+# Build cohort: join tables and filter adults (age >= 16)
+cohort_model <- tbl(con, "ICUSTAYS") %>%
+  inner_join(tbl(con, "ADMISSIONS"), 
+             by = c("HADM_ID", "SUBJECT_ID")) %>%
+  inner_join(tbl(con, "PATIENTS"), 
+             by = "SUBJECT_ID") %>%
+  inner_join(tbl(con, "DIAGNOSES_ICD"), 
+             by = c("HADM_ID", "SUBJECT_ID")) %>%
+  mutate(age = year(INTIME) - year(DOB)) %>%
+  filter(age >= 16) %>%
+  select(HADM_ID, SUBJECT_ID, ICUSTAY_ID, age, 
+         GENDER, ETHNICITY, INSURANCE, 
+         ICD9_CODE, HOSPITAL_EXPIRE_FLAG) %>%
+  collect()
+\end{verbatim}
+
+\subsection*{A.2 Sepsis Identification}
+
+Sepsis was identified using ICD-9 diagnosis codes: 038.x (septicemia), 99591 (sepsis), 99592 (severe sepsis), and 78552 (septic shock).
+
+\begin{verbatim}
+# Create binary sepsis indicator
+cohort_final <- cohort_model %>%
+  mutate(sepsis = if_else(
+    str_starts(icd9_code, "038") | 
+    icd9_code %in% c("99591", "99592", "78552"), 
+    1, 0))
+
+# Ensure one row per ICU stay, prioritizing sepsis diagnoses
+cohort_unique <- cohort_final %>%
+  group_by(subject_id, hadm_id, icustay_id) %>%
+  arrange(desc(sepsis)) %>%
+  slice(1) %>%
+  ungroup()
+\end{verbatim}
+
+\subsection*{A.3 Prevalence and Mortality Analysis}
+
+\begin{verbatim}
+# Calculate sepsis prevalence
+sepsis_prevalence <- cohort_unique %>%
+  summarise(
+    total_icu_admissions = n(),
+    sepsis_icu_admissions = sum(sepsis == "1"),
+    sepsis_prevalence = (sepsis_icu_admissions / 
+                         total_icu_admissions) * 100
+  )
+
+# Calculate mortality rates by sepsis status
+mortality_sepsis <- cohort_unique %>%
+  filter(sepsis == 1) %>%
+  group_by(hospital_expire_flag) %>%
+  summarise(count = n()) %>%
+  mutate(percentage = count / sum(count) * 100)
+\end{verbatim}
+
+\subsection*{A.4 Logistic Regression Model}
+
+\begin{verbatim}
+library(caTools)
+library(pROC)
+library(car)
+
+# Filter sepsis patients for modeling
+patients_sepsis <- cohort_unique %>% filter(sepsis == 1)
+
+# Split data (90% train, 10% test)
+set.seed(100)
+spl <- sample.split(patients_sepsis$hospital_expire_flag, 
+                    SplitRatio = 0.9)
+train <- subset(patients_sepsis, spl == TRUE)
+test <- subset(patients_sepsis, spl == FALSE)
+
+# Fit logistic regression model
+logistic <- glm(hospital_expire_flag ~ age + gender + 
+                ethnicity + insurance + icd9_code, 
+                data = train, family = 'binomial')
+
+# Generate predictions and evaluate
+predict_test <- predict(logistic, type = "response", 
+                        newdata = test)
+roc_curve <- roc(response = test$hospital_expire_flag, 
+                 predictor = predict_test)
+auc_value <- auc(roc_curve)
+
+# Find optimal threshold
+coords <- coords(roc_curve, "best", 
+                 best.method = "closest.topleft")
+best_threshold <- coords$threshold
+
+# Calculate performance metrics
+predicted_class <- ifelse(predict_test >= best_threshold, 1, 0)
+confusion_matrix <- table(test$hospital_expire_flag, 
+                          predicted_class)
+
+TN <- confusion_matrix[1, 1]
+FP <- confusion_matrix[1, 2]
+FN <- confusion_matrix[2, 1]
+TP <- confusion_matrix[2, 2]
+
+Sensitivity <- TP / (TP + FN)
+Specificity <- TN / (TN + FP)
+PPV <- TP / (TP + FP)
+NPV <- TN / (TN + FN)
+
+# Check multicollinearity
+vif(logistic)
+\end{verbatim}
+
+\subsection*{A.5 Software Environment}
+
+All analyses were performed using R version 4.x with the following key packages:
+\begin{itemize}
+    \item \texttt{dplyr}, \texttt{tidyr}: Data manipulation
+    \item \texttt{RMariaDB}, \texttt{DBI}: Database connectivity
+    \item \texttt{ggplot2}: Data visualization
+    \item \texttt{caTools}: Data splitting
+    \item \texttt{pROC}: ROC curve analysis
+    \item \texttt{car}: Variance inflation factor calculation
+\end{itemize}
+
+The complete interactive notebook with outputs and visualizations is available in the project repository.

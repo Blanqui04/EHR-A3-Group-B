@@ -1,0 +1,115 @@
+
+\subsection{Sepsis Prevalence}
+
+Among the ICU admissions analyzed, \textbf{5,149 admissions (8.4\%)} were associated with a sepsis diagnosis based on ICD-9-CM codes. The sepsis definition encompassed patients with any of the following codes: septicemia (038.x), sepsis (995.91), severe sepsis (995.92), or septic shock (785.52).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/sepsis_distribution_icu.pdf}
+\caption{Distribution of Sepsis Among ICU Admissions. Of the total ICU admissions analyzed, 5,149 (8.4\%) were classified as sepsis cases based on ICD-9-CM diagnostic codes.}
+\label{fig:sepsis_distribution}
+\end{figure}
+
+\subsection{Sepsis Prevalence by Demographics}
+
+To explore demographic patterns, sepsis prevalence was stratified by gender (Figure~\ref{fig:sepsis_gender}) and age group (Figure~\ref{fig:sepsis_age}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/sepsis_prevelence_by_gender.pdf}
+\caption{Sepsis prevalence stratified by gender. Numbers above bars indicate absolute count of sepsis cases in each group.}
+\label{fig:sepsis_gender}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/sepsis_prevelence_by_age.pdf}
+\caption{Sepsis prevalence stratified by age group. Prevalence increases with age, with patients aged 80+ showing the highest proportion of sepsis cases.}
+\label{fig:sepsis_age}
+\end{figure}
+
+\subsection{Mortality Stratification by Sepsis Status}
+
+In-hospital mortality differed substantially between groups (Figures~\ref{fig:mortality_sepsis} and \ref{fig:mortality_non_sepsis}). Among sepsis patients, the mortality rate was \textbf{32.1\%}, compared to \textbf{12.8\%} among non-sepsis patients---representing a 2.5-fold increase in mortality risk associated with sepsis.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_by_sepsis.pdf}
+\caption{In-hospital mortality distribution among patients \textbf{with} sepsis. Approximately one-third of sepsis patients (32.1\%) died during hospitalization.}
+\label{fig:mortality_sepsis}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_without_sepsis.pdf}
+\caption{In-hospital mortality distribution among patients \textbf{without} sepsis. Mortality rate was substantially lower at 12.8\%.}
+\label{fig:mortality_non_sepsis}
+\end{figure}
+
+\subsection{Logistic Regression Model}
+
+A logistic regression model was developed to predict in-hospital mortality among sepsis patients using the following predictors:
+\begin{itemize}
+    \item Age (continuous, years)
+    \item Gender (categorical: Male/Female)
+    \item Ethnicity (categorical: Asian, Black, Hispanic/Latino, White, Other)
+    \item Insurance (categorical: Government/Private/Self-pay)
+    \item ICD-9 Code (categorical: specific sepsis-related diagnosis code)
+\end{itemize}
+
+The model was trained on a randomly selected 90\% subset of the sepsis cohort (using \texttt{set.seed(100)} for reproducibility) and evaluated on the remaining 10\%.
+
+\subsection{Model Diagnostics and Assumptions}
+
+\subsubsection{Multicollinearity Assessment (VIF)}
+
+Variance Inflation Factors (VIF) were calculated using the \texttt{car} package in R to assess multicollinearity among predictors. All VIF values were below 2.0, indicating no multicollinearity concerns among the included predictors.
+
+\subsubsection{Independence of Observations}
+
+Logistic regression assumes independence of observations. However, this assumption may be partially violated in our dataset: the same patient (\texttt{subject\_id}) may contribute multiple hospital admissions (\texttt{hadm\_id}), and the same admission may include multiple ICU stays (\texttt{icustay\_id}). This potential correlation between observations is acknowledged as a limitation of the analysis.
+
+\subsection{Test Set Performance}
+
+\subsubsection{Discrimination: ROC Curve and AUC}
+
+The ROC curve on the test set yielded an Area Under the Curve (AUC) of \textbf{0.622}, indicating modest discriminative ability (Figure~\ref{fig:roc_curve}). The optimal classification threshold was determined to be \textbf{0.334} using the closest-to-top-left criterion, rather than the conventional 0.5. This lower threshold reflects the clinical context of sepsis, where false negatives (missing high-risk patients) carry greater consequences than false positives.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/roc_cuve.pdf}
+\caption{Receiver Operating Characteristic (ROC) curve for the logistic regression model. The AUC of 0.622 indicates modest discriminative ability, suggesting that demographic variables alone have limited predictive power for mortality.}
+\label{fig:roc_curve}
+\end{figure}
+
+\subsubsection{Performance Metrics}
+
+Based on the optimized threshold, comprehensive performance metrics were calculated on the test set:
+
+\begin{table}[htbp]
+\centering
+\caption{Logistic regression model performance metrics on the test set (10\% of sepsis cohort). Metrics calculated using an optimized classification threshold of 0.334.}
+\label{tab:test_performance}
+\begin{tabular}{lc}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Accuracy & 0.583 \\
+Sensitivity (True Positive Rate) & 0.604 \\
+Specificity (True Negative Rate) & 0.573 \\
+Positive Predictive Value (Precision) & 0.406 \\
+Negative Predictive Value & 0.749 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Clinical interpretation:}
+\begin{itemize}
+    \item \textbf{Sensitivity (60.4\%):} The model correctly identifies approximately 60\% of patients who will die, enabling targeted interventions for high-risk cases.
+    \item \textbf{Specificity (57.3\%):} The model correctly identifies patients who will survive with moderate accuracy. The relatively low specificity results in some false positives.
+    \item \textbf{PPV (40.6\%):} When the model predicts mortality, it is correct approximately 41\% of the time, reflecting the challenge of mortality prediction.
+    \item \textbf{NPV (74.9\%):} When the model predicts survival, it is correct approximately 75\% of the time, providing reasonable confidence for lower-risk classification.
+\end{itemize}
+
+The modest AUC of 0.622 indicates that demographic and administrative variables alone have limited predictive power for in-hospital mortality in sepsis patients. This suggests that clinical variables such as vital signs, laboratory values, and severity scores (e.g., SOFA, APACHE) would likely be needed to substantially improve model performance.
+

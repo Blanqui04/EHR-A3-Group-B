@@ -9,8 +9,11 @@
 \usepackage{authblk}
 \usepackage{graphicx}
 \usepackage{natbib}
-\usepackage{hyperref}
-\usepackage{lipsum} % Remove in final version
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{float}
 
 % Page layout (Nature-like: narrow margins, single column)
 \geometry{a4paper, margin=2.5cm}
@@ -19,34 +22,41 @@
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
 
 % Title metadata
-\title{Epidemiology and In-Hospital Mortality of Sepsis Among ICU Admissions: A Retrospective Study Using the MIMIC-III Database}
-\author[1]{Ernest Ceballos Ortega}
-\author[2]{Júlia Galimany Claver}
-\author[2]{Oriol Galimany Garriga}
-\affil[1]{Master's in Health Data Science, Universitat Rovira i Virgili, Tarragona, Spain}
-\affil[2]{Department of Biomedical Engineering, Universitat de Vic – Universitat Central de Catalunya, Vic, Spain}
+
 \date{}
 
 \begin{document}
 
 % Title page
-\input{sections/titlepage}
+\input{sections/titlepage.tex}
 
 % Abstracts
-\input{sections/abstract}
+\input{sections/abstract.tex}
+\newpage
 
 % Main text
 \section{Introduction}
-\input{sections/intro}
+\input{sections/intro.tex}
 
 \section{Methods}
-\input{sections/methods}
+\input{sections/methods.tex}
 
-% --- Les següents seccions ---
-% \section{Results}
-% \section{Discussion}
-% \section{Conclusion}
-% \bibliographystyle{unsrtnat} % References numbered by order of appearance
-% \bibliography{references}
+
+\section{Results}
+\input{sections/results.tex}
+
+\section{Discussion}
+\input{sections/discussion.tex}
+
+\section{Conclusion}
+\input{sections/conclusion.tex}
+
+\bibliographystyle{unsrtnat} % References numbered by order of appearance
+\bibliography{reference}
+
+\newpage
+\appendix
+\section{Code}
+\input{sections/appendix.tex}
 
 \end{document}

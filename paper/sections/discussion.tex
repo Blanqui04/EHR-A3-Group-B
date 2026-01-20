@@ -1,0 +1,33 @@
+This retrospective study examined the epidemiology and in-hospital mortality of sepsis among ICU admissions using the MIMIC-III database. The key findings demonstrate a substantial clinical burden of sepsis and identify significant associations with mortality outcomes.
+
+\subsection{Sepsis Prevalence and Epidemiology}
+
+The study identified sepsis in 8.4\% of ICU admissions (5,149 cases). This prevalence aligns with previously reported estimates in the literature, though variations across studies reflect differences in sepsis definitions, patient populations, and case identification methods. The ICD-9-CM-based approach used in this analysis captures clinically documented sepsis diagnoses and represents a practical definition consistent with retrospective database studies. Previous work using administrative data has reported sepsis prevalence ranging from 5\% to 15\% depending on the stringency of the case definition, with our findings falling within this expected range.
+
+\subsection{Mortality Disparities}
+
+A striking finding was the substantial difference in in-hospital mortality between sepsis and non-sepsis patients (32.1\% vs. 12.8\%). This 2.5-fold elevation in mortality among sepsis patients underscores the severe clinical impact of sepsis in the ICU setting and is consistent with prior literature demonstrating sepsis as a major driver of critical illness and death. The absolute risk difference of approximately 19 percentage points emphasizes the high disease burden attributable to sepsis and supports aggressive identification and management strategies.
+
+\subsection{Predictive Model Development and Performance}
+
+The logistic regression model demonstrated modest discrimination ability, with an AUC of 0.622 on the test set. This limited discrimination indicates that demographic and administrative variables alone (age, gender, ethnicity, insurance, and ICD-9 code) have restricted predictive power for in-hospital mortality in sepsis patients. The optimal classification threshold of 0.334 (rather than the conventional 0.5) reflects the clinical context: in a high-mortality population, using a lower threshold appropriately balances sensitivity and specificity.
+
+The model achieved a sensitivity of 60.4\%, capturing a substantial proportion of patients who will die in-hospital. However, the specificity of 57.3\% indicates moderate ability to correctly identify survivors, resulting in a notable false positive rate. The positive predictive value (40.6\%) reflects the challenge of mortality prediction: when the model predicts mortality, it is correct less than half the time. The negative predictive value (74.9\%) provides reasonable confidence when predicting survival. These performance characteristics suggest the model has limited clinical utility for individual risk stratification but confirms that demographic factors alone are insufficient for accurate mortality prediction.
+
+\subsection{Model Diagnostics and Validity}
+
+The absence of multicollinearity (all VIF values < 2.0) indicates the selected predictors are statistically independent and appropriate for inclusion in the model. However, the modest AUC of 0.622 highlights a fundamental limitation: demographic and administrative variables do not capture the physiologic complexity of sepsis severity. Clinical variables such as vital signs, lactate levels, organ dysfunction scores (SOFA, APACHE), and infection source are likely necessary to achieve clinically meaningful discrimination.
+
+\subsection{Clinical and Methodological Implications}
+
+The model coefficients suggest that age is associated with increased mortality risk, consistent with extensive literature on aging and sepsis outcomes. Gender and ethnicity showed variable associations, though interpretation is limited by the modest overall model performance. Insurance status may serve as a proxy for socioeconomic factors and access to care.
+
+The limited predictive performance (AUC = 0.622) carries an important clinical implication: demographic factors alone should not be used for mortality risk stratification in sepsis patients. Effective risk assessment requires integration of clinical parameters including physiologic measurements, laboratory values, and validated severity scores. The study design choice to focus predictive modeling on the sepsis cohort reflects the clinical question of interest: among patients identified with sepsis, which readily available factors predict poor outcomes?
+
+\subsection{Limitations}
+
+Several limitations warrant acknowledgment. First, the use of ICD-9-CM codes depends on clinical documentation and coding practices, which may introduce misclassification. Sepsis may be underdiagnosed in some cases or overdiagnosed in others. Second, the model includes only demographic and administrative variables; clinical measurements such as vital signs, laboratory values, and organ dysfunction markers were not included, which could improve discrimination. Third, MIMIC-III represents a single tertiary academic medical center in the United States, limiting generalizability to other healthcare settings or populations. Fourth, the study is observational, precluding causal inference regarding risk factors and outcomes.
+
+\subsection{Future Directions}
+
+Future work could enhance the model by incorporating physiologic and laboratory variables available in MIMIC-III, such as vital signs, lactate, organ dysfunction scores, and infection source. Validation in external cohorts (e.g., other ICU populations or recent data) would strengthen confidence in model generalizability. Investigation of temporal trends in sepsis epidemiology and outcomes could reveal whether awareness and management strategies have evolved over time. Finally, comparative effectiveness research evaluating specific clinical interventions in sepsis management could inform practice guidelines and improve outcomes.

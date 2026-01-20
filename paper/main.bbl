@@ -1,0 +1,73 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Rhodes et~al.(2017)Rhodes, Evans, Alhazzani, et~al.]{sepsis_definition}
+Andrew Rhodes, Laura~E. Evans, Waleed Alhazzani, et~al.
+\newblock Surviving sepsis campaign: International guidelines for management of sepsis and septic shock: 2016.
+\newblock \emph{Intensive Care Medicine}, 43\penalty0 (3):\penalty0 304–377, 2017.
+\newblock \doi{10.1007/s00134-017-4683-6}.
+
+\bibitem[Levy et~al.(2003)Levy, Fink, Marshall, Abraham, Angus, Cook, Cohen, Opal, Vincent, and Ramsay]{sepsis2}
+Mitchell~M. Levy, Mitchell~P. Fink, John~C. Marshall, Edward Abraham, Derek Angus, Deborah Cook, Jonathan Cohen, Steven~M. Opal, Jean-Louis Vincent, and Graham Ramsay.
+\newblock 2001 sccm/esicm/accp/ats/sis international sepsis definitions conference.
+\newblock \emph{Critical Care medicine}, 31\penalty0 (4):\penalty0 1250--1256, 2003.
+\newblock \doi{10.1097/01.ccm.0000050454.01978.3b}.
+
+\bibitem[Singer et~al.(2016)Singer, Deutschman, Seymour, et~al.]{sepsis3}
+Mervyn Singer, Clifford~S Deutschman, Christopher~W Seymour, et~al.
+\newblock The third international consensus definitions for sepsis and septic shock (sepsis-3).
+\newblock \emph{JAMA}, 315\penalty0 (8):\penalty0 801--810, 2016.
+\newblock \doi{10.1001/jama.2016.0287}.
+
+\bibitem[Novosad et~al.(2016)Novosad, Sapiano, Grigg, et~al.]{vital_signs}
+Shannon~A. Novosad, Mathew~R.P. Sapiano, Cheri Grigg, et~al.
+\newblock Vital signs: Epidemiology of sepsis: Prevalence of health care factors and opportunities for prevention.
+\newblock \emph{MMWR. Morbidity and Mortality Weekly Report}, 65\penalty0 (33):\penalty0 864–869, 2016.
+\newblock \doi{10.15585/mmwr.mm6533e1}.
+
+\bibitem[Bouza et~al.(2016)Bouza, Lopez-Cuadrado, and Amate-Blanco]{icd9_codes}
+C.~Bouza, T.~Lopez-Cuadrado, and J.~M. Amate-Blanco.
+\newblock Use of explicit icd9-cm codes to identify adult severe sepsis: impacts on epidemiological estimates.
+\newblock \emph{Critical Care}, 20\penalty0 (1), 2016.
+\newblock \doi{10.1186/s13054-016-1497-9}.
+
+\bibitem[Vincent et~al.(1996)Vincent, Moreno, Takala, Willatts, De~Mendon\c{c}a, Bruining, Reinhart, Suter, and Thijs]{sofa}
+J.~L. Vincent, R.~Moreno, J.~Takala, S.~Willatts, A.~De~Mendon\c{c}a, H.~Bruining, C.~K. Reinhart, P.~M. Suter, and L.~G. Thijs.
+\newblock The sofa (sepsis-related organ failure assessment) score to describe organ dysfunction/failure: On behalf of the working group on sepsis-related problems of the european society of intensive care medicine.
+\newblock \emph{Intensive Care Medicine}, 22\penalty0 (7):\penalty0 707–710, 1996.
+\newblock \doi{10.1007/bf01709751}.
+
+\bibitem[Seymour et~al.(2016)Seymour, Liu, et~al.]{qsofa}
+Christopher~W. Seymour, Vincent~X. Liu, et~al.
+\newblock Assessment of clinical criteria for sepsis: For the third international consensus definitions for sepsis and septic shock (sepsis-3).
+\newblock \emph{JAMA}, 315\penalty0 (8):\penalty0 762, 2016.
+\newblock \doi{10.1001/jama.2016.0288}.
+
+\bibitem[Johnson et~al.(2016)Johnson, Pollard, Shen, Lehman, Feng, Ghassemi, Moody, Szolovits, Celi, and Mark]{mimic}
+Alistair E~W Johnson, Tom~J Pollard, Lu~Shen, Li-wei~H Lehman, Mengling Feng, Mohammad Ghassemi, Benjamin Moody, Peter Szolovits, Leo~Anthony Celi, and Roger~G Mark.
+\newblock Mimic-iii, a freely accessible critical care database.
+\newblock \emph{Scientific Data}, 3\penalty0 (1):\penalty0 160035, 2016.
+\newblock \doi{10.1038/sdata.2016.35}.
+
+\bibitem[Angus et~al.(2001)Angus, Linde-Zwirble, Lidicker, Clermont, Carcillo, and Pinsky]{epidemiology}
+Derek~C. Angus, Walter~T. Linde-Zwirble, Jeffrey Lidicker, Gilles Clermont, Joseph Carcillo, and Michael~R. Pinsky.
+\newblock Epidemiology of severe sepsis in the united states: Analysis of incidence, outcome, and associated costs of care.
+\newblock \emph{Critical Care Medicine}, 29\penalty0 (7):\penalty0 1303–1310, 2001.
+\newblock \doi{10.1097/00003246-200107000-00002}.
+
+\bibitem[Jolley et~al.(2015)Jolley, Sawka, Yergens, Quan, Jetté, and Doig]{validity}
+Rachel~J Jolley, Keri~Jo Sawka, Dean~W Yergens, Hude Quan, Nathalie Jetté, and Christopher~J Doig.
+\newblock Validity of administrative data in recording sepsis: a systematic review.
+\newblock \emph{Critical Care}, 19\penalty0 (1), 2015.
+\newblock \doi{10.1186/s13054-015-0847-3}.
+
+\bibitem[{National Center for Health Statistics}(2021)]{cdc_icd9cm}
+{National Center for Health Statistics}.
+\newblock International classification of diseases, ninth revision, clinical modification (icd-9-cm).
+\newblock \url{https://archive.cdc.gov/www_cdc_gov/nchs/icd/icd9cm.htm}, 2021.
+
+\end{thebibliography}
