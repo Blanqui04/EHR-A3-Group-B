@@ -1,0 +1,9 @@
+\textbf{Clinical interpretation:}
+\begin{itemize}
+    \item \textbf{Sensitivity (60.4\%):} The model correctly identifies approximately 60\% of patients who will die, enabling targeted interventions for high-risk cases.
+    \item \textbf{Specificity (57.3\%):} The model correctly identifies patients who will survive with moderate accuracy. The relatively low specificity results in some false positives.
+    \item \textbf{PPV (40.6\%):} When the model predicts mortality, it is correct approximately 41\% of the time, reflecting the challenge of mortality prediction.
+    \item \textbf{NPV (74.9\%):} When the model predicts survival, it is correct approximately 75\% of the time, providing reasonable confidence for lower-risk classification.
+\end{itemize}
+
+The modest AUC of 0.622 indicates that demographic and administrative variables alone have limited predictive power for in-hospital mortality in sepsis patients. This suggests that clinical variables such as vital signs, laboratory values, and severity scores (e.g., SOFA, APACHE) would likely be needed to substantially improve model performance.
