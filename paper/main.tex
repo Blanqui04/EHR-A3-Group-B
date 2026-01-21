@@ -14,7 +14,9 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{float}
-\usepackage[skip=0pt, font=small, labelfont=bf]{caption}  % Minimal space between figure and caption
+\usepackage[skip=0pt, font=small, labelfont=bf, justification=centering]{caption}  % Minimal space between figure and caption
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{0pt}
 \usepackage{fancyhdr}
 \usepackage{stfloats}  % For bottom floats in twocolumn
 
@@ -85,6 +87,7 @@
 \setlength{\bibsep}{3pt}  % Compact bibliography spacing
 \bibliography{reference}
 \endgroup
+
 
 \onecolumn
 \newpage

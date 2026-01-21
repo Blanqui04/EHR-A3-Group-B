@@ -1,13 +1,9 @@
-
 \subsection{Sepsis Prevalence}
-
-We analyzed a total of 53417 ICU admissions, from which \textbf{7261 admissions (13.59\%)} were associated with a sepsis diagnosis based on ICD-9-CM codes. The sepsis definition encompassed patients with any of the following codes: septicemia (038.x), sepsis (995.91), severe sepsis (995.92), or septic shock (785.52).
-
+We analyzed a total of 53.417 ICU admissions, from which \textbf{7261 admissions (13.59\%)} were associated with a sepsis diagnosis based on ICD-9-CM codes. The sepsis definition encompassed patients with any of the following codes: septicemia (038.x), sepsis (995.91), severe sepsis (995.92), or septic shock (785.52).
 As shown in Figure~\ref{fig:sepsis_distribution}, the majority of ICU admissions were not associated with sepsis (46156 admissions, 86.41\%), nevertheless admissions related to sepsis accounted approximately for one in seven in the cohort. 
-
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.7\textwidth]{figures/sepsis_distribution_icu.pdf}
+\includegraphics[width=0.85\columnwidth]{figures/sepsis_distribution_icu.pdf}
 \caption{Distribution of Sepsis Among ICU Admissions. Of the total ICU admissions analyzed, 7261 (13.59\%) were classified as sepsis cases based on ICD-9-CM diagnostic codes.}
 \label{fig:sepsis_distribution}
 \end{figure}
@@ -20,14 +16,14 @@ Sepsis prevalence was similar between males and females: 3179 of 23323 admission
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figures/sepsis_prevelence_by_gender.pdf}\vspace{-35pt}
+\includegraphics[width=\columnwidth]{figures/sepsis_prevelence_by_gender.pdf}
 \caption{Sepsis prevalence by gender.}
 \label{fig:sepsis_gender}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/sepsis_prevelence_by_age.pdf}
+\includegraphics[width=\columnwidth]{figures/sepsis_prevelence_by_age.pdf}
 \caption{Sepsis prevalence stratified by age group (age groups being 16-40, 40-60, 60-80, 80+).}
 \label{fig:sepsis_age}
 \end{figure}
@@ -38,14 +34,14 @@ In-hospital mortality among ICU admissions differed between the patients diagnos
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_by_sepsis.pdf}
+\includegraphics[width=\columnwidth]{figures/mortality_of_patients_by_sepsis.pdf}
 \caption{In-hospital mortality distribution among ICU admissions \textbf{with} sepsis. Approximately one-third of sepsis patients (32.57\%) died during hospitalization.}
 \label{fig:mortality_sepsis}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_without_sepsis.pdf}
+\includegraphics[width=\columnwidth]{figures/mortality_of_patients_without_sepsis.pdf}
 \caption{In-hospital mortality distribution among ICU admissions \textbf{without} sepsis. Mortality rate was 9.05\%.}
 \label{fig:mortality_non_sepsis}
 \end{figure}
@@ -71,26 +67,29 @@ In the fitted model, age was associated with in-hospital mortality ($\beta = 0.0
 
 \subsubsection{Multicollinearity Assessment (VIF)}
 
-Variance Inflation Factors (VIF) were calculated to assess multicollinearity among predictors. VIF values below 5 indicate no concern, values between 5--10 suggest moderate multicollinearity, and values above 10 indicate severe multicollinearity. Our analysis yielded the following results:
+Variance Inflation Factors (VIF) were calculated to assess multicollinearity among the five predictors in the logistic regression model. VIF quantifies how much the variance of a regression coefficient is inflated due to multicollinearity with other predictors. We interpret VIF values as follows: VIF $< 5$ indicates no multicollinearity concern, VIF $5$--$10$ suggests moderate multicollinearity, and VIF $> 10$ indicates severe multicollinearity.
+
+VIF was computed for each predictor from the fitted logistic regression model using auxiliary linear regressions. The aggregated results across the five main predictors are presented in Table~\ref{tab:vif}.
 
 \begin{table}[htbp]
 \centering
-\caption{Variance Inflation Factors (VIF) for main predictors.}
+\caption{Variance Inflation Factors (VIF) for all model predictors from the logistic regression model (aggregated values).}
 \label{tab:vif}
 \begin{tabular}{lc}
 \toprule
 \textbf{Predictor} & \textbf{VIF} \\
 \midrule
-Age & 1.007 \\
-Gender & 1.007 \\
+Age & 1.13 \\
+Gender & 1.04 \\
+ICD-9 Code & 1.67 \\
+Insurance & 7.89 \\
+Ethnicity & 43.70 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Both VIF values are very close to 1.0, indicating \textbf{no multicollinearity} between age and gender. This confirms that the coefficient estimates are stable and not inflated due to predictor correlation.
-
+Age (VIF $= 1.13$), Gender (VIF $= 1.04$), and ICD-9 Code (VIF $= 1.67$) show minimal inflation, indicating no multicollinearity concern for these predictors. Insurance (VIF $= 7.89$) exhibits moderate multicollinearity, while Ethnicity (VIF $= 43.70$) exhibits severe multicollinearity. However, the elevated VIF for categorical variables with many categories primarily reflects the inherent redundancy in dummy variable encoding rather than problematic multicollinearity between distinct predictors. The high VIF for Ethnicity is expected given the large number of ethnic categories in the MIMIC-III database. While the model exhibits some multicollinearity in these categorical predictors, this does not substantially compromise the interpretability of the coefficients for the continuous and binary predictors (Age, Gender, and ICD-9 Code).
 \subsubsection{Independence of Observations}
-
 Logistic regression assumes independence of observations. However, this assumption may be partially violated in our dataset: the same patient (\texttt{subject\_id}) may contribute multiple hospital admissions (\texttt{hadm\_id}), and the same admission may include multiple ICU stays (\texttt{icustay\_id}). This potential correlation between observations is acknowledged as a limitation of the analysis.
 
 \subsection{Test Set Performance}
@@ -101,7 +100,7 @@ We evaluated the model discrimination performance using a ROC analysis. The ROC 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figures/roc_cuve.pdf}\vspace{-35pt}
+\includegraphics[width=\columnwidth]{figures/roc_cuve.pdf}
 \caption{ROC curve for logistic regression model (AUC = 0.622).}
 \label{fig:roc_curve}
 \end{figure}
@@ -144,4 +143,8 @@ Negative Predictive Value & 0.749 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+
+
+
 

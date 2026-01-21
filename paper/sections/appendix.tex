@@ -126,11 +126,65 @@ Specificity <- TN / (TN + FP)
 PPV <- TP / (TP + FP)
 NPV <- TN / (TN + FN)
 
-# Check multicollinearity
-vif(logistic)
+
 \end{verbatim}
 
-\subsection*{A.5 Software Environment}
+\subsection*{A.5 Variance Inflation Factor (VIF) Calculation}
+
+VIF was calculated using manual auxiliary linear regressions, as the \texttt{car} package was unavailable in the computational environment. The VIF for each predictor is calculated as $\text{VIF} = 1/(1-R^2)$, where $R^2$ is obtained from regressing each predictor on all other predictors.
+
+\begin{verbatim}
+# Manual VIF calculation function
+vif_manual <- function(model_object) {
+  X <- model.matrix(model_object)
+  X <- X[, -1]  # Remove intercept
+  col_names <- colnames(X)
+  vif_values <- numeric(ncol(X))
+  
+  for (i in 1:ncol(X)) {
+    # Escape column names with backticks
+    response_var <- paste0("`", col_names[i], "`")
+    predictor_vars <- paste0("`", col_names[-i], "`", 
+                             collapse=" + ")
+    
+    # Fit auxiliary regression
+    aux_formula <- as.formula(paste(response_var, "~", 
+                                    predictor_vars))
+    aux_model <- lm(aux_formula, data=as.data.frame(X))
+    
+    # Calculate VIF
+    r_squared <- summary(aux_model)$r.squared
+    vif_values[i] <- 1 / (1 - r_squared)
+  }
+  
+  return(data.frame(Predictor = col_names, VIF = vif_values))
+}
+
+# Calculate VIF for logistic model
+vif_results <- vif_manual(logistic)
+
+# Aggregate by main predictor
+vif_results_agg <- vif_results %>%
+  mutate(
+    main_predictor = case_when(
+      Predictor == "age" ~ "age",
+      Predictor == "genderM" ~ "gender",
+      str_detect(Predictor, "^ethnicity") ~ "ethnicity",
+      str_detect(Predictor, "^insurance") ~ "insurance",
+      str_detect(Predictor, "^icd9_code") ~ "icd9_code",
+      TRUE ~ Predictor
+    )
+  ) %>%
+  group_by(main_predictor) %>%
+  summarise(VIF_avg = mean(VIF), .groups = "drop") %>%
+  rename(Predictor = main_predictor, VIF = VIF_avg)
+
+# Display results
+print(vif_results_agg)
+\end{verbatim}
+
+\subsection*{A.6 Software Environment}
+
 
 All analyses were performed using R version 4.x with the following key packages:
 \begin{itemize}
@@ -139,6 +193,5 @@ All analyses were performed using R version 4.x with the following key packages:
     \item \texttt{ggplot2}: Data visualization
     \item \texttt{caTools}: Data splitting
     \item \texttt{pROC}: ROC curve analysis
-    \item \texttt{car}: Variance inflation factor calculation
 \end{itemize}
 
