@@ -71,7 +71,23 @@ In the fitted model, age was associated with in-hospital mortality ($\beta = 0.0
 
 \subsubsection{Multicollinearity Assessment (VIF)}
 
-Variance Inflation Factors (VIF) were calculated using the \texttt{car} package in R to assess multicollinearity among predictors. All VIF values were below 2.0, indicating no multicollinearity concerns among the included predictors.
+Variance Inflation Factors (VIF) were calculated to assess multicollinearity among predictors. VIF values below 5 indicate no concern, values between 5--10 suggest moderate multicollinearity, and values above 10 indicate severe multicollinearity. Our analysis yielded the following results:
+
+\begin{table}[htbp]
+\centering
+\caption{Variance Inflation Factors (VIF) for main predictors.}
+\label{tab:vif}
+\begin{tabular}{lc}
+\toprule
+\textbf{Predictor} & \textbf{VIF} \\
+\midrule
+Age & 1.007 \\
+Gender & 1.007 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both VIF values are very close to 1.0, indicating \textbf{no multicollinearity} between age and gender. This confirms that the coefficient estimates are stable and not inflated due to predictor correlation.
 
 \subsubsection{Independence of Observations}
 
@@ -92,7 +108,23 @@ We evaluated the model discrimination performance using a ROC analysis. The ROC 
 
 \subsubsection{Performance Metrics}
 
-Based on the optimized threshold of 0.334, comprehensive performance metrics were calculated on the test set:
+Based on the optimized threshold of 0.334, comprehensive performance metrics were calculated on the test set.
+
+\textbf{Confusion Matrix:}
+
+\begin{table}[htbp]
+\centering
+\caption{Confusion matrix for the logistic regression model on the test set.}
+\label{tab:confusion_matrix}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Predicted: Alive} & \textbf{Predicted: Deceased} \\
+\midrule
+\textbf{Actual: Alive} & 280 (TN) & 209 (FP) \\
+\textbf{Actual: Deceased} & 94 (FN) & 143 (TP) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 Overall accuracy was 0.583. Sensitivity and specificity were 0.603 and 0.573, respectively. The positive predictive value was 0.406, while the negative predictive value was 0.749. A summary of performance metrics is provided in Table~\ref{tab:test_performance}.
 
