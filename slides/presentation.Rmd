@@ -11,6 +11,7 @@ output:
     fonttheme: "structurebold"
     slide_level: 2
     toc: true
+    latex_engine: xelatex
 ---
 
 ```{r setup, include=FALSE}
