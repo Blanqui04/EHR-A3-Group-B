@@ -8,12 +8,13 @@
 \usepackage{titlesec}
 \usepackage{authblk}
 \usepackage{graphicx}
-\usepackage{natbib}
+\usepackage[numbers,square,sort&compress]{natbib}  % Citations as [1], [2-4], etc.
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage[skip=0pt, font=small, labelfont=bf]{caption}  % Minimal space between figure and caption
 \usepackage{fancyhdr}
 \usepackage{stfloats}  % For bottom floats in twocolumn
 
@@ -58,12 +59,11 @@
 {\small\textsuperscript{1}Master's in Health Data Science (MHEDAS), Universitat Rovira i Virgili, Tarragona, Spain\par}
 \vspace{0.5cm}
 
-% Abstract
-\parbox{0.9\textwidth}{
-\small\textbf{Abstract:} This study analyzes sepsis epidemiology and in-hospital mortality among ICU admissions using the MIMIC-III database. We identified 7,261 sepsis cases (13.59\% prevalence) among 53,432 ICU admissions. Patients with sepsis showed 3.6-fold higher mortality (32.57\% vs 9.04\%). A logistic regression model using demographic variables achieved an AUC of 0.622, indicating that clinical variables are necessary for accurate mortality prediction. These findings underscore the substantial burden of sepsis in critical care and the need for comprehensive risk stratification tools.
-}
+\input{sections/abstract.tex}
 \vspace{0.8cm}
 ]
+
+
 
 % Main text
 \section{Introduction}
@@ -82,6 +82,7 @@
 \begingroup
 \small
 \bibliographystyle{unsrtnat}
+\setlength{\bibsep}{3pt}  % Compact bibliography spacing
 \bibliography{reference}
 \endgroup
 
