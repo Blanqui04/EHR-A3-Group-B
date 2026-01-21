@@ -12,4 +12,4 @@ SD: 16.2
 χ² statistic (2,847.3)
 RR i OR amb CI
 Training/test mortality rates
-Class imbalance 2.08:1
+Class imbalance 2.08:1.
