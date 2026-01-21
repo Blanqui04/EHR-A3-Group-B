@@ -14,7 +14,15 @@ A striking finding was the substantial difference in in-hospital mortality betwe
 
 The logistic regression model demonstrated modest discrimination ability, with an AUC of 0.622 on the test set. This limited discrimination indicates that demographic and administrative variables alone (age, gender, ethnicity, insurance, and ICD-9 code) have restricted predictive power for in-hospital mortality in sepsis patients. The optimal classification threshold of 0.334 (rather than the conventional 0.5) reflects the clinical context: in a high-mortality population, using a lower threshold appropriately balances sensitivity and specificity.
 
-The model achieved a sensitivity of 60.3\%, capturing a substantial proportion of patients who will die in-hospital. However, the specificity of 57.3\% indicates moderate ability to correctly identify survivors, resulting in a notable false positive rate. The positive predictive value (40.6\%) reflects the challenge of mortality prediction: when the model predicts mortality, it is correct less than half the time. The negative predictive value (74.9\%) provides reasonable confidence when predicting survival. These performance characteristics suggest that the model has limited clinical utility for individual risk stratification but confirms that demographic factors alone are insufficient for accurate mortality prediction.
+\textbf{Clinical interpretation:}
+\begin{itemize}
+    \item \textbf{Sensitivity (60.4\%):} The model correctly identifies approximately 60\% of patients who will die in-hospital, enabling targeted interventions for high-risk cases.
+    \item \textbf{Specificity (57.3\%):} The model correctly identifies patients who will survive with moderate accuracy. The relatively low specificity results in some false positives.
+    \item \textbf{PPV (40.6\%):} When the model predicts mortality, it is correct les than half of the time.
+    \item \textbf{NPV (74.9\%):} The model provides reasonable confidence when predicting survival. 
+\end{itemize}
+
+These performance characteristics suggest that the model has limited clinical utility for individual risk stratification but confirms that demographic factors alone are insufficient for accurate mortality prediction.
 
 \subsection{Interpretation of model performance}
 
@@ -24,19 +32,11 @@ The modest discriminative performance of the logistic regression model (AUC of 0
 
 The model coefficients suggest that age is associated with increased mortality risk, consistent with extensive literature on aging and sepsis outcomes \cite{sepsis3}. Gender and ethnicity showed variable associations, though interpretation is limited by the modest overall model performance. Insurance status may serve as a proxy for socioeconomic factors and access to care.
 
-\textbf{Clinical interpretation:}
-\begin{itemize}
-    \item \textbf{Sensitivity (60.4\%):} The model correctly identifies approximately 60\% of patients who will die, enabling targeted interventions for high-risk cases.
-    \item \textbf{Specificity (57.3\%):} The model correctly identifies patients who will survive with moderate accuracy. The relatively low specificity results in some false positives.
-    \item \textbf{PPV (40.6\%):} When the model predicts mortality, it is correct approximately 41\% of the time, reflecting the challenge of mortality prediction.
-    \item \textbf{NPV (74.9\%):} When the model predicts survival, it is correct approximately 75\% of the time, providing reasonable confidence for lower-risk classification.
-\end{itemize}
-
 The modest AUC of 0.622 indicates that demographic and administrative variables alone have limited predictive power for in-hospital mortality in sepsis patients. This suggests that clinical variables such as vital signs, laboratory values, and severity scores (e.g., SOFA, APACHE) would likely be needed to substantially improve model performance. Effective risk assessment requires integration of clinical parameters beyond demographic factors for mortality risk stratification in sepsis patients.
 
 \subsection{Limitations}
 
-Several limitations warrant acknowledgment. First, the use of ICD-9-CM codes depends on clinical documentation and coding practices, which may introduce misclassification, with sepsis potentially underdiagnosed or overdiagnosed in some cases. Second, the model includes only demographic and administrative variables; clinical measurements such as vital signs, laboratory values, and organ dysfunction markers were not included and could improve discriminatory performance. Third, MIMIC-III represents a single tertiary academic medical center in the United States, limiting generalizability to other healthcare settings or populations. Fourth, the observational nature of the study precludes causal inference regarding risk factors and outcomes. Fifth, the inclusion of multiple ICU stays or admissions from the same patient may have introduced dependence between observations, potentially affecting the interpretation of the results. Sixth, sepsis classification was performed at the admission level and may not fully capture temporal changes in sepsis status during the ICU stay. Finally, age values were used as provided in the MIMIC-III database, where ages above 89 years are intentionally obfuscated for privacy reasons. This may have introduced imprecision in age-related analyses, particularly among the oldest patients.
+Several limitations warrant acknowledgment. First, the use of ICD-9-CM codes depends on clinical documentation and coding practices, which may introduce misclassification, with sepsis potentially underdiagnosed or overdiagnosed in some cases. Second, the model includes only demographic and administrative variables; clinical measurements such as vital signs, laboratory values, and organ dysfunction markers were not included and could improve discriminatory performance. Third, MIMIC-III represents a single tertiary academic medical center in the United States, limiting generalizability to other healthcare settings or populations. Fourth, the observational nature of the study precludes causal inference regarding risk factors and outcomes. Fifth, the inclusion of multiple ICU stays or admissions from the same patient may have introduced dependence between observations, potentially affecting the interpretation of the results. Sixth, sepsis classification was performed at the admission level and may not fully capture temporal changes in sepsis status during the ICU stay. Seventh, because ICU admissions may contain multiple sepsis-related ICD-9 codes, collapsing diagnoses to a single retained ICD-9 code per ICU stay may cause that the obtained sepsis type is not the most severe one. Finally, age values were used as provided in the MIMIC-III database, where ages above 89 years are intentionally obfuscated for privacy reasons. This may have introduced imprecision in age-related analyses, particularly among the oldest patients.
 
 \subsection{Future Directions}
 
