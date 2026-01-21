@@ -1,7 +1,7 @@
-\documentclass[10pt]{article}
+\documentclass[10pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage{mathptmx}  % Times font (professional journals)
 \usepackage[english]{babel}
 \usepackage{geometry}
 \usepackage{setspace}
@@ -14,25 +14,56 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{stfloats}  % For bottom floats in twocolumn
 
-% Page layout (Nature-like: narrow margins, single column)
-\geometry{a4paper, margin=2.5cm}
-\onehalfspacing
-\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+% Page layout (Nature-style: two columns, narrow margins)
+\geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2.5cm, columnsep=0.7cm}
 
-% Title metadata
+% Section formatting
+\titleformat{\section}{\normalsize\bfseries\uppercase}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\small\bfseries}{\thesubsubsection}{0.5em}{}
+\titlespacing{\section}{0pt}{12pt}{6pt}
+\titlespacing{\subsection}{0pt}{10pt}{4pt}
+\titlespacing{\subsubsection}{0pt}{8pt}{3pt}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Sepsis in ICU -- MIMIC-III Study}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Compact spacing
+\setstretch{1.0}
+\setlength{\parindent}{0.4cm}
+\setlength{\parskip}{0pt}
 
 \date{}
 
 \begin{document}
 
-% Title page
-\input{sections/titlepage.tex}
+% Title and authors (spanning both columns)
+\twocolumn[
+\centering
+{\Large\bfseries Epidemiology and In-Hospital Mortality of Sepsis Among ICU Admissions: A Retrospective Study Using the MIMIC-III Database\par}
+\vspace{0.6cm}
+{\normalsize
+\textbf{Ernest Ceballos Ortega}\textsuperscript{1}, 
+\textbf{Júlia Galimany Claver}\textsuperscript{1}, 
+\textbf{Oriol Galimany Garriga}\textsuperscript{1}
+\par}
+\vspace{0.3cm}
+{\small\textsuperscript{1}Master's in Health Data Science (MHEDAS), Universitat Rovira i Virgili, Tarragona, Spain\par}
+\vspace{0.5cm}
 
-% Abstracts
-\input{sections/abstract.tex}
-\newpage
+% Abstract
+\parbox{0.9\textwidth}{
+\small\textbf{Abstract:} This study analyzes sepsis epidemiology and in-hospital mortality among ICU admissions using the MIMIC-III database. We identified 7,261 sepsis cases (13.59\% prevalence) among 53,432 ICU admissions. Patients with sepsis showed 3.6-fold higher mortality (32.57\% vs 9.04\%). A logistic regression model using demographic variables achieved an AUC of 0.622, indicating that clinical variables are necessary for accurate mortality prediction. These findings underscore the substantial burden of sepsis in critical care and the need for comprehensive risk stratification tools.
+}
+\vspace{0.8cm}
+]
 
 % Main text
 \section{Introduction}
@@ -41,19 +72,20 @@
 \section{Methods}
 \input{sections/methods.tex}
 
-
 \section{Results}
 \input{sections/results.tex}
 
-\section{Discussion}
 \input{sections/discussion.tex}
 
-\section{Conclusion}
 \input{sections/conclusion.tex}
 
-\bibliographystyle{unsrtnat} % References numbered by order of appearance
+\begingroup
+\small
+\bibliographystyle{unsrtnat}
 \bibliography{reference}
+\endgroup
 
+\onecolumn
 \newpage
 \appendix
 \section{Code}

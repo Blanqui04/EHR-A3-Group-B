@@ -1,12 +1,12 @@
 
 \subsection{Sepsis Prevalence}
 
-Among the ICU admissions analyzed, \textbf{5,149 admissions (8.4\%)} were associated with a sepsis diagnosis based on ICD-9-CM codes. The sepsis definition encompassed patients with any of the following codes: septicemia (038.x), sepsis (995.91), severe sepsis (995.92), or septic shock (785.52).
+Among the 53,432 ICU admissions analyzed, \textbf{7,261 admissions (13.59\%)} were associated with a sepsis diagnosis based on ICD-9-CM codes. The sepsis definition encompassed patients with any of the following codes: septicemia (038.x), sepsis (995.91), severe sepsis (995.92), or septic shock (785.52).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.7\textwidth]{figures/sepsis_distribution_icu.pdf}
-\caption{Distribution of Sepsis Among ICU Admissions. Of the total ICU admissions analyzed, 5,149 (8.4\%) were classified as sepsis cases based on ICD-9-CM diagnostic codes.}
+\includegraphics[width=\columnwidth]{figures/sepsis_distribution_icu.pdf}
+\caption{Distribution of Sepsis Among ICU Admissions.}
 \label{fig:sepsis_distribution}
 \end{figure}
 
@@ -16,33 +16,33 @@ To explore demographic patterns, sepsis prevalence was stratified by gender (Fig
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/sepsis_prevelence_by_gender.pdf}
-\caption{Sepsis prevalence stratified by gender. Numbers above bars indicate absolute count of sepsis cases in each group.}
+\includegraphics[width=\columnwidth]{figures/sepsis_prevelence_by_gender.pdf}
+\caption{Sepsis prevalence by gender.}
 \label{fig:sepsis_gender}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/sepsis_prevelence_by_age.pdf}
-\caption{Sepsis prevalence stratified by age group. Prevalence increases with age, with patients aged 80+ showing the highest proportion of sepsis cases.}
+\includegraphics[width=\columnwidth]{figures/sepsis_prevelence_by_age.pdf}
+\caption{Sepsis prevalence by age group.}
 \label{fig:sepsis_age}
 \end{figure}
 
 \subsection{Mortality Stratification by Sepsis Status}
 
-In-hospital mortality differed substantially between groups (Figures~\ref{fig:mortality_sepsis} and \ref{fig:mortality_non_sepsis}). Among sepsis patients, the mortality rate was \textbf{32.1\%}, compared to \textbf{12.8\%} among non-sepsis patients---representing a 2.5-fold increase in mortality risk associated with sepsis.
+In-hospital mortality differed substantially between groups (Figures~\ref{fig:mortality_sepsis} and \ref{fig:mortality_non_sepsis}). Among sepsis patients, the mortality rate was \textbf{32.57\%}, compared to \textbf{9.04\%} among non-sepsis patients---representing a 3.6-fold increase in mortality risk associated with sepsis.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_by_sepsis.pdf}
-\caption{In-hospital mortality distribution among patients \textbf{with} sepsis. Approximately one-third of sepsis patients (32.1\%) died during hospitalization.}
+\includegraphics[width=\columnwidth]{figures/mortality_of_patients_by_sepsis.pdf}
+\caption{Mortality among sepsis patients (32.57\%).}
 \label{fig:mortality_sepsis}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/mortality_of_patients_without_sepsis.pdf}
-\caption{In-hospital mortality distribution among patients \textbf{without} sepsis. Mortality rate was substantially lower at 12.8\%.}
+\includegraphics[width=\columnwidth]{figures/mortality_of_patients_without_sepsis.pdf}
+\caption{Mortality among non-sepsis patients (9.04\%).}
 \label{fig:mortality_non_sepsis}
 \end{figure}
 
@@ -77,8 +77,8 @@ The ROC curve on the test set yielded an Area Under the Curve (AUC) of \textbf{0
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{figures/roc_cuve.pdf}
-\caption{Receiver Operating Characteristic (ROC) curve for the logistic regression model. The AUC of 0.622 indicates modest discriminative ability, suggesting that demographic variables alone have limited predictive power for mortality.}
+\includegraphics[width=\columnwidth]{figures/roc_cuve.pdf}
+\caption{ROC curve for logistic regression model (AUC = 0.622).}
 \label{fig:roc_curve}
 \end{figure}
 
