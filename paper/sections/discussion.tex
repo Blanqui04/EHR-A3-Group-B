@@ -1,12 +1,14 @@
+\section{Discussion}
+
 This retrospective study examined the epidemiology and in-hospital mortality of sepsis among ICU admissions using the MIMIC-III database. The key findings indicate a substantial clinical burden of sepsis and meaningful associations with mortality outcomes.
 
 \subsection{Sepsis Prevalence and Epidemiology}
 
-The study identified sepsis in 13.59 % of ICU admissions (7,261 cases). This prevalence aligns with previously reported estimates in the literature, though variations across studies reflect differences in sepsis definitions, patient populations, and case identification methods. Previous ICU-based epidemiological research has reported sepsis occurrence rates in the range of approximately 13\% to 40\% among critically ill patients, reflecting heterogeneity in populations and case definitions \cite{icu_sepsis}. The ICD-9-CM-based approach used in this analysis captures clinically documented sepsis diagnoses and represents a practical definition consistent with retrospective database studies. A systematic review of ICU-treated sepsis studies has shown that prevalence measures vary widely but can include proportions comparable to our findings \cite{epidemiology_icu}.
+The study identified sepsis in 13.59\% of ICU admissions (7,261 cases). This prevalence aligns with previously reported estimates in the literature, though variations across studies reflect differences in sepsis definitions, patient populations, and case identification methods. Previous ICU-based epidemiological research has reported sepsis occurrence rates in the range of approximately 13\% to 40\% among critically ill patients, reflecting heterogeneity in populations and case definitions \cite{icu_sepsis}. The ICD-9-CM-based approach used in this analysis captures clinically documented sepsis diagnoses and represents a practical definition consistent with retrospective database studies. A systematic review of ICU-treated sepsis studies has shown that prevalence measures vary widely but can include proportions comparable to our findings \cite{epidemiology_icu}.
 
-\subsection{Mortality Disparities}
+\subsection{Impact of Sepsis on In-Hospital Mortality}
 
-A striking finding was the substantial difference in in-hospital mortality between sepsis and non-sepsis patients (32.57\% vs. 9.04\%). This 3.6-fold elevation in mortality among sepsis patients underscores the severe clinical impact of sepsis in the ICU setting and is consistent with prior literature demonstrating sepsis as a major driver of critical illness and death \cite{icu_sepsis}. The absolute risk difference of approximately 23 percentage points indicates that sepsis contributes substantially to in-hospital mortality in ICU patients.
+A striking finding was the substantial difference in in-hospital mortality between sepsis and non-sepsis patients (32.57\% vs. 9.05\%). This 3.6-fold elevation in mortality among sepsis patients underscores the severe clinical impact of sepsis in the ICU setting and is consistent with prior literature demonstrating sepsis as a major driver of critical illness and death \cite{icu_sepsis}. The absolute risk difference of approximately 23 percentage points indicates that sepsis contributes substantially to in-hospital mortality in ICU patients.
 
 \subsection{Predictive Model Development and Performance}
 
@@ -14,7 +16,7 @@ The logistic regression model demonstrated modest discrimination ability, with a
 
 The model achieved a sensitivity of 60.3\%, capturing a substantial proportion of patients who will die in-hospital. However, the specificity of 57.3\% indicates moderate ability to correctly identify survivors, resulting in a notable false positive rate. The positive predictive value (40.6\%) reflects the challenge of mortality prediction: when the model predicts mortality, it is correct less than half the time. The negative predictive value (74.9\%) provides reasonable confidence when predicting survival. These performance characteristics suggest that the model has limited clinical utility for individual risk stratification but confirms that demographic factors alone are insufficient for accurate mortality prediction.
 
-\subsection{Model Performance and Interpretation}
+\subsection{Interpretation of model performance}
 
 The modest discriminative performance of the logistic regression model (AUC of 0.622) highlights a fundamental limitation of the approach: demographic and administrative variables do not capture the physiologic complexity of sepsis severity. Clinical variables such as vital signs, lactate levels, organ dysfunction scores (SOFA, APACHE), and infection source are likely necessary to achieve clinically meaningful discrimination \cite{seymour}.
 
