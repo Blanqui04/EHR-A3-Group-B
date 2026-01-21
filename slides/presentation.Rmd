@@ -1,0 +1,262 @@
+---
+title: "Sepsis Prevalence and Mortality Risk in ICU Patients"
+subtitle: "A MIMIC-III Database Analysis"
+author: "Ernest Ceballos, Júlia Galimany, Oriol Galimany"
+institute: "Universitat Rovira i Virgili"
+date: "January 2026"
+output:
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "dolphin"
+    fonttheme: "structurebold"
+    slide_level: 2
+    toc: true
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+# Introduction
+
+## What is Sepsis?
+
+- **Definition**: Life-threatening organ dysfunction caused by dysregulated host response to infection
+
+- **Clinical Impact**:
+  - Leading cause of mortality in ICUs worldwide
+  - Rapid progression requires early identification
+  - Affects millions globally each year
+
+- **Challenge**: Can we predict who is at highest risk?
+
+## Research Objectives
+
+1. **Estimate sepsis prevalence** among ICU patients
+
+2. **Compare mortality rates** between sepsis and non-sepsis patients
+
+3. **Develop a predictive model** for mortality risk in sepsis patients
+
+4. **Identify key risk factors** associated with mortality
+
+# Methods
+
+## Data Source: MIMIC-III
+
+- **Database**: Medical Information Mart for Intensive Care III (v1.4)
+- **Institution**: Beth Israel Deaconess Medical Center
+- **Period**: 2001-2012
+- **Content**: De-identified health data from >40,000 ICU admissions
+
+## Cohort Selection
+
+**Inclusion Criteria:**
+
+- Adult patients (age ≥ 16 years)
+- At least one ICU admission recorded
+
+**Final Cohort:** 61,524 unique ICU admissions
+
+**Sepsis Identification (ICD-9 codes):**
+
+| Code | Description |
+|------|-------------|
+| 038.x | Septicemia |
+| 99591 | Sepsis |
+| 99592 | Severe sepsis |
+| 78552 | Septic shock |
+
+## Statistical Analysis
+
+- **Prevalence**: Proportion of ICU stays with sepsis diagnosis
+- **Mortality comparison**: Chi-square test
+- **Predictive modeling**: Logistic regression
+
+**Model predictors:**
+
+- Age, Gender, Ethnicity
+- Insurance type
+- ICD-9 diagnosis code
+
+# Results
+
+## Sepsis Prevalence
+
+\begin{center}
+\textbf{8.24\% of ICU admissions had sepsis}
+\end{center}
+
+- **Total ICU admissions**: 61,524
+- **Sepsis cases**: 5,071
+
+\vspace{0.5cm}
+
+**Approximately 1 in 12 ICU patients has sepsis**
+
+## Prevalence by Demographics
+
+### By Gender:
+- **Males**: 8.81% (higher)
+- **Females**: 7.51%
+
+### By Age Group:
+| Age Group | Prevalence |
+|-----------|------------|
+| 16-40 | 6.4% |
+| 40-60 | 8.2% |
+| 60-80 | 8.7% |
+| 80+ | 8.1% |
+
+*Prevalence increases with age until 60-80 years*
+
+## Mortality: Sepsis vs Non-Sepsis
+
+```{r mortality-comparison, echo=FALSE}
+# Create data for visualization
+mortality_data <- data.frame(
+  Group = c("With Sepsis", "Without Sepsis"),
+  Mortality = c(24.39, 9.93)
+)
+```
+
+| Group | Mortality Rate |
+|-------|---------------|
+| **With Sepsis** | **24.39%** |
+| Without Sepsis | 9.93% |
+
+\vspace{0.5cm}
+
+\begin{center}
+\textbf{Sepsis patients have 2.5× higher mortality risk}
+\end{center}
+
+*p < 0.001 (Chi-square test)*
+
+## Predictive Model: ROC Curve
+
+**Logistic Regression Performance:**
+
+| Metric | Value |
+|--------|-------|
+| AUC | 0.622 |
+| Optimal Threshold | 0.334 |
+| Accuracy | 58.3% |
+| Sensitivity | 60.4% |
+| Specificity | 57.3% |
+| PPV | 40.6% |
+| NPV | 74.9% |
+
+## Model Interpretation
+
+**Key Findings:**
+
+- AUC of 0.622 indicates **modest discriminative ability**
+- Model performs better than random (AUC > 0.5)
+- **Demographic factors alone are insufficient** for accurate risk stratification
+
+**Significant predictors:**
+
+- Age (older → higher risk)
+- Insurance type (proxy for socioeconomic status)
+- Specific ICD-9 codes
+
+# Discussion
+
+## Key Insights
+
+1. **High Disease Burden**
+   - 1 in 12 ICU patients affected
+   - 2.5× mortality risk
+
+2. **Demographic Patterns**
+   - Higher prevalence in males
+   - Increasing prevalence with age
+
+3. **Model Limitations**
+   - Demographic predictors insufficient (AUC = 0.622)
+   - Need for clinical variables (lactate, vitals, etc.)
+
+## Limitations
+
+- **Retrospective design**: Cannot establish causality
+- **Single center**: Results may not generalize
+- **ICD-9 coding**: Possible under/over-reporting
+- **Independence assumption**: Same patient may have multiple admissions
+- **Missing clinical variables**: Vital signs, lab values excluded
+
+## Clinical Implications
+
+- Sepsis screening should be **universal in ICU settings**
+- **Demographic factors alone cannot guide** treatment decisions
+- Future models should incorporate:
+  - Vital signs (temperature, heart rate, BP)
+  - Laboratory values (lactate, WBC, creatinine)
+  - Organ dysfunction scores (SOFA, qSOFA)
+
+# Conclusion
+
+## Summary
+
+\begin{block}{Main Findings}
+\begin{enumerate}
+\item Sepsis prevalence: \textbf{8.24\%} of ICU admissions
+\item Mortality risk: \textbf{2.5× higher} with sepsis
+\item Predictive model: \textbf{AUC = 0.622} (modest performance)
+\end{enumerate}
+\end{block}
+
+\vspace{0.5cm}
+
+**Take-home message:** 
+
+Sepsis remains a critical clinical challenge. Effective risk stratification requires integration of clinical parameters beyond basic demographics.
+
+## Future Directions
+
+1. **Incorporate clinical variables**
+   - Vital signs, laboratory values
+   - Organ dysfunction scores
+
+2. **Machine learning approaches**
+   - Random forests, neural networks
+   - Real-time prediction models
+
+3. **External validation**
+   - Multi-center studies
+   - Prospective evaluation
+
+## Thank You!
+
+\begin{center}
+\Large{\textbf{Questions?}}
+\end{center}
+
+\vspace{1cm}
+
+**Contact:**
+
+- Ernest Ceballos
+- Júlia Galimany  
+- Oriol Galimany
+
+\vspace{0.5cm}
+
+*Electronic Health Records - Activity A3*
+
+*Universitat Rovira i Virgili, January 2026*
+
+# Appendix
+
+## Code Availability
+
+- **Analysis Notebook**: `analysis/Activity-A3.ipynb`
+- **Full Report**: `paper/main.pdf`
+- **Repository**: GitHub - Blanqui04/EHR-A3-Group-B
+
+## References
+
+1. Singer M, et al. *JAMA*. 2016;315(8):801-810. (Sepsis-3 definitions)
+2. Johnson AEW, et al. *Scientific Data*. 2016;3:160035. (MIMIC-III)
+3. Fleischmann C, et al. *Am J Respir Crit Care Med*. 2016;193(3):259-272.
