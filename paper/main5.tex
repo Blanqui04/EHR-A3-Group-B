@@ -14,19 +14,27 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{float}
-\usepackage[skip=0pt, font=small, labelfont=bf, justification=centering]{caption}
-\setlength{\abovecaptionskip}{0pt}
-\setlength{\belowcaptionskip}{0pt}
+% \usepackage[skip=0pt, font=small, labelfont=bf, justification=centering]{caption}
+% \setlength{\abovecaptionskip}{0pt}
+% \setlength{\belowcaptionskip}{0pt}
 \usepackage{fancyhdr}
 % \usepackage{stfloats}  % For bottom floats in twocolumn
+\usepackage[
+  font=small,
+  labelfont=bf,
+  justification=centering
+]{caption}
+
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{0pt}
 
 % --- AGGRESSIVE float spacing reduction (twocolumn fix) ---
 \setlength{\textfloatsep}{4pt plus 1pt minus 1pt}
 \setlength{\floatsep}{4pt plus 1pt minus 1pt}
 \setlength{\intextsep}{4pt plus 1pt minus 1pt}
 
-\setlength{\abovecaptionskip}{2pt}
-\setlength{\belowcaptionskip}{0pt}
+% \setlength{\abovecaptionskip}{2pt}
+% \setlength{\belowcaptionskip}{0pt}
 
 % Page layout (Nature-style: two columns, narrow margins)
 \geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2.5cm, columnsep=0.7cm}
